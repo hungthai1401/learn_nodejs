@@ -9,6 +9,27 @@ var usersRouter = require('./routes/users');
 
 var app = express();
 
+var mongoose = require('mongoose');
+
+// options to connect db
+let options = {
+  db: {native_parser: true},
+  server: {poolSize: 5},
+  user: "thainh",
+  pass: "123456"
+};
+
+// use Promise to connect db
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://localhost:27017/tutorail', options).then(
+    () => {
+      console.log('Connect DB successfully');
+    },
+    err => {
+      console.log(`Connect Db failed. Errors: ${err}`);
+    }
+);
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
